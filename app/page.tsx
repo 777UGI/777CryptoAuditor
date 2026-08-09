@@ -85,9 +85,7 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
             Audit Transactions with <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-success">Confidence</span>
           </h2>
-          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
-            Instantly verify whether a blockchain transaction is genuinely associated with your wallet, or easily check any wallet's balances across multiple chains.
-          </p>
+
         </div>
 
         {/* Main Content Grid */}
