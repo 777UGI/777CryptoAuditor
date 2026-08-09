@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { networks } from "@/lib/web3/networks";
-import { Search, Loader2, Save, Settings, ChevronDown, ChevronUp } from "lucide-react";
+import { Search, Loader2, Save, Settings, ChevronDown, ChevronUp, Wallet } from "lucide-react";
 import { CryptoLogo } from "./CryptoLogo";
 
 interface Props {
@@ -12,7 +12,9 @@ interface Props {
 }
 
 export default function TransactionForm({ onVerify, onCheckBalance, isLoading }: Props) {
+  const [activeTab, setActiveTab] = useState<"transaction" | "balance">("transaction");
   const [txHash, setTxHash] = useState("");
+  const [balanceAddress, setBalanceAddress] = useState("");
   const [error, setError] = useState("");
   const [showSettings, setShowSettings] = useState(false);
 
@@ -53,28 +55,31 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
     e.preventDefault();
     setError("");
 
+    if (activeTab === "balance") {
+      const hash = balanceAddress.trim();
+      if (!hash) {
+        setError("Please enter a wallet address.");
+        return;
+      }
+      
+      if (hash.startsWith("0x") && hash.length === 42) {
+        onCheckBalance(["ethereum", "bsc"], hash);
+      } else if (hash.startsWith("T") && hash.length === 34) {
+        onCheckBalance(["tron"], hash);
+      } else if (hash.length >= 32 && hash.length <= 44 && !hash.startsWith("0x")) {
+        onCheckBalance(["solana"], hash);
+      } else {
+        setError("Could not identify network from wallet address format.");
+      }
+      return;
+    }
+
     const hash = txHash.trim();
     if (!hash) {
-      setError("Please enter a transaction hash or wallet address.");
+      setError("Please enter a transaction hash.");
       return;
     }
 
-    // Check if it's a Wallet Address
-    if (hash.startsWith("0x") && hash.length === 42) {
-      // EVM Wallet Address
-      onCheckBalance(["ethereum", "bsc"], hash);
-      return;
-    } else if (hash.startsWith("T") && hash.length === 34) {
-      // Tron Wallet Address
-      onCheckBalance(["tron"], hash);
-      return;
-    } else if (hash.length >= 32 && hash.length <= 44 && !hash.startsWith("0x")) {
-      // Solana Wallet Address (Base58 heuristic)
-      onCheckBalance(["solana"], hash);
-      return;
-    }
-
-    // If not a Wallet Address, assume it's a Transaction Hash
     const checks: { networkId: string, walletAddress: string }[] = [];
 
     // Auto-detect based on hash format
@@ -123,8 +128,79 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
   return (
     <div className="bg-card border border-card-border rounded-2xl p-6 shadow-xl backdrop-blur-sm space-y-6">
       
-      {/* Wallet Settings Accordion */}
-      <div className="border border-card-border rounded-xl overflow-hidden bg-background/50">
+      {/* Tabs */}
+      <div className="flex bg-background/50 p-1.5 rounded-xl">
+        <button
+          type="button"
+          onClick={() => setActiveTab("transaction")}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${
+            activeTab === "transaction" 
+              ? "bg-primary text-primary-foreground shadow-sm" 
+              : "text-foreground/60 hover:text-foreground hover:bg-background/50"
+          }`}
+        >
+          Verify Transaction
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("balance")}
+          className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${
+            activeTab === "balance" 
+              ? "bg-primary text-primary-foreground shadow-sm" 
+              : "text-foreground/60 hover:text-foreground hover:bg-background/50"
+          }`}
+        >
+          Check Wallet Balance
+        </button>
+      </div>
+
+      {/* Main Form */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label htmlFor="inputValue" className="block text-sm font-medium text-foreground/80 mb-2">
+            {activeTab === "transaction" ? "Transaction Hash" : "Wallet Address"}
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-foreground/40">
+              {activeTab === "transaction" ? <Search size={18} /> : <Wallet size={18} />}
+            </div>
+            <input
+              id="inputValue"
+              type="text"
+              placeholder={activeTab === "transaction" ? "Paste TxHash..." : "Paste Wallet Address..."}
+              value={activeTab === "transaction" ? txHash : balanceAddress}
+              onChange={(e) => activeTab === "transaction" ? setTxHash(e.target.value) : setBalanceAddress(e.target.value)}
+              className="w-full bg-background border border-card-border rounded-xl pl-11 pr-4 py-4 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder:text-foreground/30 font-mono text-sm shadow-inner"
+              disabled={isLoading}
+              required
+            />
+          </div>
+        </div>
+
+        {error && (
+          <p className="text-error text-sm animate-in fade-in">{error}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed text-lg"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 size={24} className="animate-spin" />
+              {activeTab === "transaction" ? "Scanning..." : "Checking..."}
+            </>
+          ) : (
+            <>
+              {activeTab === "transaction" ? "Verify Transaction" : "Check Balance"}
+            </>
+          )}
+        </button>
+      </form>
+
+      {/* Global Wallet Settings Accordion (Moved to bottom) */}
+      <div className="border border-card-border rounded-xl overflow-hidden bg-background/50 mt-8">
         <button 
           type="button"
           onClick={() => setShowSettings(!showSettings)}
@@ -205,50 +281,6 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
         )}
       </div>
 
-      {/* Main Search Form */}
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label htmlFor="txHash" className="block text-sm font-medium text-foreground/80 mb-1.5">
-            Auto-Detect Transaction or Check Balance
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-foreground/50">
-              <Search size={18} />
-            </div>
-            <input
-              id="txHash"
-              type="text"
-              placeholder="Paste TxHash or Wallet Address..."
-              value={txHash}
-              onChange={(e) => setTxHash(e.target.value)}
-              className="w-full bg-background border border-card-border rounded-xl pl-11 pr-4 py-4 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder:text-foreground/30 font-mono text-sm shadow-inner"
-              disabled={isLoading}
-              required
-            />
-          </div>
-        </div>
-
-        {error && (
-          <p className="text-error text-sm animate-in fade-in">{error}</p>
-        )}
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed text-lg"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 size={24} className="animate-spin" />
-              Scanning...
-            </>
-          ) : (
-            <>
-              Verify or Check Balance
-            </>
-          )}
-        </button>
-      </form>
     </div>
   );
 }
