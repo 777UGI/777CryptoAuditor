@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import InstallPrompt from "@/components/InstallPrompt";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,19 +28,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground antialiased relative overflow-x-hidden`}
       >
-        {/* Decorative background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
-        
-        <Header />
-        <main className="flex-1 flex flex-col">
-          {children}
-        </main>
-        <Footer />
-        {/* <InstallPrompt /> */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* Decorative background glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
+          
+          <Header />
+          <main className="flex-1 flex flex-col">
+            {children}
+          </main>
+          <Footer />
+          {/* <InstallPrompt /> */}
+        </ThemeProvider>
       </body>
     </html>
   );

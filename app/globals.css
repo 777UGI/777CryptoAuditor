@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* Default is dark */
   --background: #0f172a; /* Slate 900 */
   --foreground: #f8fafc; /* Slate 50 */
   --primary: #06b6d4; /* Neon Cyan (Cyan 500) */
@@ -11,6 +12,19 @@
   --card: #1e293b; /* Slate 800 */
   --card-border: #334155; /* Slate 700 */
 }
+
+:root.light, .light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #0891b2; /* Cyan 600 */
+  --primary-foreground: #ffffff;
+  --success: #059669;
+  --error: #dc2626;
+  --warning: #ca8a04;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+}
+
 
 @theme inline {
   --color-background: var(--background);

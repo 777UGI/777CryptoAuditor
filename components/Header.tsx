@@ -1,6 +1,7 @@
 import LogoutButton from "./LogoutButton";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default async function Header() {
   const cookieStore = await cookies();
@@ -26,6 +27,7 @@ export default async function Header() {
           </div>
         </div>
         <nav className="flex items-center gap-4 text-sm font-medium">
+          <ThemeToggle />
           {isAuthenticated && <LogoutButton />}
         </nav>
       </div>
