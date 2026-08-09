@@ -1,6 +1,7 @@
 import { VerificationResult } from "@/lib/web3/verifier";
 import { networks } from "@/lib/web3/networks";
 import { CheckCircle2, XCircle, AlertTriangle, ArrowRightLeft, ArrowDownToLine, ArrowUpFromLine, ExternalLink } from "lucide-react";
+import { CryptoLogo } from "./CryptoLogo";
 
 interface Props {
   result: VerificationResult;
@@ -72,13 +73,17 @@ export default function TransactionResult({ result, networkId }: Props) {
       {/* Wallet Balances */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div className="bg-primary/10 p-4 rounded-xl border border-primary/20 overflow-hidden">
-          <p className="text-xs text-primary/80 mb-1 uppercase tracking-wider font-semibold truncate">Wallet {network?.nativeCurrency.symbol} Balance</p>
+          <p className="text-xs text-primary/80 mb-1 uppercase tracking-wider font-semibold truncate flex items-center gap-1.5">
+            <CryptoLogo symbol={network?.nativeCurrency.symbol || ""} size={14} /> Wallet {network?.nativeCurrency.symbol} Balance
+          </p>
           <p className="text-xl font-bold text-foreground break-all">
             {result.walletNativeBalance || "0"} <span className="text-primary text-sm whitespace-nowrap">{network?.nativeCurrency.symbol}</span>
           </p>
         </div>
         <div className="bg-success/10 p-4 rounded-xl border border-success/20 overflow-hidden">
-          <p className="text-xs text-success/80 mb-1 uppercase tracking-wider font-semibold truncate">Wallet USDT Balance</p>
+          <p className="text-xs text-success/80 mb-1 uppercase tracking-wider font-semibold truncate flex items-center gap-1.5">
+            <CryptoLogo symbol="USDT" size={14} /> Wallet USDT Balance
+          </p>
           <p className="text-xl font-bold text-foreground break-all">
             {result.walletUsdtBalance || "0"} <span className="text-success text-sm whitespace-nowrap">USDT</span>
           </p>
@@ -100,8 +105,12 @@ export default function TransactionResult({ result, networkId }: Props) {
 
         <div className="bg-background/50 p-4 rounded-xl border border-card-border/50">
           <p className="text-xs text-foreground/50 mb-1 uppercase tracking-wider font-semibold">Amount Transferred</p>
-          <p className="text-2xl font-bold text-foreground">
-            {result.amount} <span className="text-primary text-lg">{result.symbol}</span>
+          <p className="text-2xl font-bold text-foreground flex items-center gap-2">
+            {result.amount} 
+            <span className="text-primary text-lg flex items-center gap-1">
+              <CryptoLogo symbol={result.symbol} size={20} />
+              {result.symbol}
+            </span>
           </p>
         </div>
 

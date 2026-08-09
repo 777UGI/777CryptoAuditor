@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { networks } from "@/lib/web3/networks";
 import { Search, Loader2, Save, Settings, ChevronDown, ChevronUp } from "lucide-react";
+import { CryptoLogo } from "./CryptoLogo";
 
 interface Props {
   onVerify: (checks: { networkId: string, walletAddress: string }[], txHash: string) => void;
@@ -144,7 +145,9 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
             
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-foreground/70 mb-1">Ethereum Address</label>
+                <label className="flex items-center gap-2 text-xs font-medium text-foreground/70 mb-1">
+                  <CryptoLogo symbol="ETH" size={16} /> Ethereum Address
+                </label>
                 <input
                   type="text"
                   placeholder="0x..."
@@ -154,7 +157,9 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-foreground/70 mb-1">BSC Address</label>
+                <label className="flex items-center gap-2 text-xs font-medium text-foreground/70 mb-1">
+                  <CryptoLogo symbol="BNB" size={16} /> BSC Address
+                </label>
                 <input
                   type="text"
                   placeholder="0x..."
@@ -164,7 +169,9 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-foreground/70 mb-1">Solana Address</label>
+                <label className="flex items-center gap-2 text-xs font-medium text-foreground/70 mb-1">
+                  <CryptoLogo symbol="SOL" size={16} /> Solana Address
+                </label>
                 <input
                   type="text"
                   placeholder="Base58..."
@@ -174,7 +181,9 @@ export default function TransactionForm({ onVerify, onCheckBalance, isLoading }:
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-foreground/70 mb-1">Tron Address</label>
+                <label className="flex items-center gap-2 text-xs font-medium text-foreground/70 mb-1">
+                  <CryptoLogo symbol="TRX" size={16} /> Tron Address
+                </label>
                 <input
                   type="text"
                   placeholder="T..."

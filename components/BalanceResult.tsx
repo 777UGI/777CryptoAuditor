@@ -1,6 +1,7 @@
 import { BalanceResult } from "@/lib/web3/balance";
 import { networks } from "@/lib/web3/networks";
 import { Wallet, AlertCircle } from "lucide-react";
+import { CryptoLogo } from "./CryptoLogo";
 
 interface Props {
   results: BalanceResult[];
@@ -40,20 +41,24 @@ export default function BalanceResultDisplay({ results, walletAddress }: Props) 
           return (
             <div key={idx} className="p-4 rounded-xl border border-card-border bg-background/50 hover:border-primary/50 transition-colors">
               <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-success"></div>
+                <CryptoLogo symbol={network.nativeCurrency.symbol} size={20} />
                 {network.name}
               </h4>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-background p-3 rounded-lg border border-card-border">
-                  <p className="text-xs text-foreground/60 mb-1 font-medium">{network.nativeCurrency.symbol} Balance</p>
+                  <p className="text-xs text-foreground/60 mb-1 font-medium flex items-center gap-1.5">
+                    <CryptoLogo symbol={network.nativeCurrency.symbol} size={14} /> {network.nativeCurrency.symbol} Balance
+                  </p>
                   <p className="text-lg font-bold font-mono text-foreground truncate" title={result.nativeBalance}>
                     {Number(result.nativeBalance).toLocaleString(undefined, { maximumFractionDigits: 6 })}
                   </p>
                 </div>
                 
                 <div className="bg-background p-3 rounded-lg border border-card-border">
-                  <p className="text-xs text-foreground/60 mb-1 font-medium">USDT Balance</p>
+                  <p className="text-xs text-foreground/60 mb-1 font-medium flex items-center gap-1.5">
+                    <CryptoLogo symbol="USDT" size={14} /> USDT Balance
+                  </p>
                   <p className="text-lg font-bold font-mono text-foreground truncate" title={result.usdtBalance}>
                     {Number(result.usdtBalance).toLocaleString(undefined, { maximumFractionDigits: 4 })}
                   </p>
