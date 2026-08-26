@@ -83,7 +83,7 @@ export default function InstallPrompt() {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-foreground">Install 777 ChainScan</h3>
+            <h3 className="text-xl font-bold text-foreground">Install 777 Crypto Auditor</h3>
             <p className="text-sm text-foreground/70 mt-2">
               For the best experience, install this app on your home screen. It's fast, secure, and works offline!
             </p>

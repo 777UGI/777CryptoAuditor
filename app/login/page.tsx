@@ -125,7 +125,7 @@ export default function LoginPage() {
           <div className="flex items-center justify-center overflow-hidden rounded-xl bg-background border border-card-border shadow-[0_0_15px_rgba(6,182,212,0.4)] p-1">
             <Image 
               src="/Logo1.png" 
-              alt="777 ChainScan Logo" 
+              alt="777 Crypto Auditor Logo" 
               width={64} 
               height={64} 
               className="object-cover rounded-lg"
@@ -138,7 +138,7 @@ export default function LoginPage() {
           <p className="text-sm text-foreground/60">
             {isRegistering 
               ? "Register a new account and optionally set up your default wallet addresses."
-              : "Please enter your credentials to access the 777 ChainScan dashboard."}
+              : "Please enter your credentials to access the 777 Crypto Auditor dashboard."}
           </p>
         </div>
 

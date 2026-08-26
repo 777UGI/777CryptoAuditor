@@ -14,7 +14,7 @@ export default async function Header() {
           <div className="flex items-center justify-center overflow-hidden rounded-xl bg-background border border-card-border shadow-[0_0_10px_rgba(6,182,212,0.3)]">
             <Image 
               src="/Logo1.png" 
-              alt="777 ChainScan Logo" 
+              alt="777 Crypto Auditor Logo" 
               width={40} 
               height={40} 
               className="object-cover"
@@ -22,7 +22,7 @@ export default async function Header() {
             />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-foreground">777 ChainScan</h1>
+            <h1 className="text-xl font-bold tracking-tight text-foreground">777 Crypto Auditor</h1>
             <p className="text-xs text-foreground/60 hidden sm:block">Instant Blockchain Transaction Auditor</p>
           </div>
         </div>

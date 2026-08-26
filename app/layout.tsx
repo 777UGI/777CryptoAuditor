@@ -17,7 +17,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "777 ChainScan",
+  title: "777 Crypto Auditor",
   description: "Instant Blockchain Transaction Verifier & Auditor.",
   manifest: "/manifest.json",
   icons: {
