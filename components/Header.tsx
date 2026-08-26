@@ -22,7 +22,7 @@ export default async function Header() {
             />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-foreground">777 Crypto Auditor</h1>
+            <h1 className="text-xl font-bold tracking-tight text-foreground">777 ChainScan</h1>
             <p className="text-xs text-foreground/60 hidden sm:block">Instant Blockchain Transaction Auditor</p>
           </div>
         </div>

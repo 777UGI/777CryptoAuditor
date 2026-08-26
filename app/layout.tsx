@@ -17,9 +17,13 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "777 Crypto Auditor",
+  title: "777 ChainScan",
   description: "Instant Blockchain Transaction Verifier & Auditor.",
   manifest: "/manifest.json",
+  icons: {
+    icon: '/Logo2.png',
+    apple: '/Logo2.png',
+  },
 };
 
 export default function RootLayout({

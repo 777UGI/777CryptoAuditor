@@ -1,5 +1,5 @@
   {
-  "name": "777 Crypto Auditor",
+  "name": "777 ChainScan",
   "short_name": "Crypto Auditor",
   "description": "Instant Blockchain Transaction Verifier & Auditor.",
   "start_url": "/",
@@ -8,14 +8,14 @@
   "theme_color": "#06b6d4",
   "icons": [
     {
-      "src": "/logo.jpg",
+      "src": "/Logo2.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "/logo.jpg",
+      "src": "/Logo2.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
