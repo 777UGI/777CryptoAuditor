@@ -13,7 +13,7 @@ export default async function Header() {
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center overflow-hidden rounded-xl bg-background border border-card-border shadow-[0_0_10px_rgba(6,182,212,0.3)]">
             <Image 
-              src="/logo.jpg" 
+              src="/Logo1.png" 
               alt="777 ChainScan Logo" 
               width={40} 
               height={40} 
